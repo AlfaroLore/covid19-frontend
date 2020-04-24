@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
 
 const Country = () => {
   const [formData, setFormData] = useState({
@@ -8,15 +10,25 @@ const Country = () => {
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const res = await axios.get('/country?name=italy', '', config);
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <section className="container">
       <h1 className="large text-primary">Covid 19 info by country</h1>
-      <small>* = required field</small>
+      <small>Choose your country</small>
       <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
           <select name="country" value={country} onChange={onChange}>
