@@ -1,14 +1,13 @@
 import axios from 'axios';
 import { GET_COUNTRY, COUNTRY_ERROR } from './types';
 
-// Get current users profile
+// Get country
 export const getInfoByCountry = (countryName) => async (dispatch) => {
   try {
     const res = await axios.get(`/country?name=${countryName}`);
-
     dispatch({
       type: GET_COUNTRY,
-      payload: res.data,
+      payload: res.data[0],
     });
   } catch (err) {
     dispatch({

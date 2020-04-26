@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { getInfoByCountry } from '../../actions/country';
 import { connect } from 'react-redux';
 
-const Country = () => {
+const Country = ({ getInfoByCountry }) => {
   const [formData, setFormData] = useState({
     country: '',
   });
@@ -12,17 +12,7 @@ const Country = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const res = await axios.get('/country?name=italy', '', config);
-      console.log(res.data);
-    } catch (err) {
-      console.error(err);
-    }
+    getInfoByCountry(country);
   };
 
   return (
@@ -49,4 +39,4 @@ const Country = () => {
   );
 };
 
-export default Country;
+export default connect(null, { getInfoByCountry })(Country);
